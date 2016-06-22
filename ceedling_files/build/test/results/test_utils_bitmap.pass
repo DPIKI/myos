@@ -1,0 +1,35 @@
+---
+:source:
+  :path: "../src/tests"
+  :file: test_utils_bitmap.c
+:successes:
+- :test: test_init
+  :line: 18
+  :message: ''
+- :test: test_set_bits
+  :line: 40
+  :message: ''
+- :test: test_clear_bits
+  :line: 85
+  :message: ''
+- :test: test_set_bit
+  :line: 135
+  :message: ''
+- :test: test_clear_bit
+  :line: 155
+  :message: ''
+- :test: test_bitmap_find_one
+  :line: 176
+  :message: ''
+- :test: test_bitmap_find_null
+  :line: 201
+  :message: ''
+:failures: []
+:ignores: []
+:counts:
+  :total: 7
+  :passed: 7
+  :failed: 0
+  :ignored: 0
+:stdout:
+- ''
