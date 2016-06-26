@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 
-SET(CMAKE_TOOLCHAIN_FILE ~/src/toolchain-i686-elf.cmake)
+SET(CMAKE_TOOLCHAIN_FILE /home/vlad/src/toolchain-i686-elf.cmake)
 
 project(myos.bin)
 
@@ -19,7 +19,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # Compiling the kernel
 SET(SOURCES ${SOURCES} kernel/kernel.c)
+SET(SOURCES ${SOURCES} kernel/fiasco.c)
 SET(SOURCES ${SOURCES} kernel/terminal.c)
+SET(SOURCES ${SOURCES} kernel/memmgr.c)
 SET(SOURCES ${SOURCES} kernel/boot.S)
+
 SET(SOURCES ${SOURCES} utils/string.c)
+SET(SOURCES ${SOURCES} utils/mem.c)
+SET(SOURCES ${SOURCES} utils/bitmap.c)
+
 add_executable(myos.bin ${SOURCES})

@@ -10,7 +10,7 @@
 .long FLAGS
 .long CHECKSUM
 
-.section boot_stack
+.section .boot_stack
 stack_bottom:
 .skip 0xFFFF
 stack_top:
@@ -22,6 +22,11 @@ stack_top:
 
 _start:
     movl $stack_top, %esp
+    pushl 48(%ebx)
+    pushl 44(%ebx)
+    pushl 8(%ebx)
+    pushl 4(%ebx)
+    pushl 0(%ebx)
     call kmain
 
 _end:

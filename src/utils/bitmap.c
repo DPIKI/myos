@@ -1,6 +1,5 @@
 #include "utils/bitmap.h"
 #include "utils/utils.h"
-#include <stdio.h>
 
 
 error_t bitmap_init(Bitmap* bitmap, uint8_t* buffer, size_t bitmap_length)
@@ -15,7 +14,7 @@ error_t bitmap_init(Bitmap* bitmap, uint8_t* buffer, size_t bitmap_length)
         ? (bitmap_length >> 3) + 1
         : bitmap_length >> 3;
 
-    for (int i = 0; i < bitmap->n_bytes; i++) {
+    for (size_t i = 0; i < bitmap->n_bytes; i++) {
         bitmap->data[i] = 0;
     }
 
@@ -50,7 +49,7 @@ error_t bitmap_set_bits(Bitmap* bitmap, size_t index, size_t length)
     first_byte_mask <<= start_bit;
     data[start_byte] |= first_byte_mask;
     
-    for (int i = start_byte + 1; i < start_byte + full_bytes + 1; i++) {
+    for (size_t i = start_byte + 1; i < start_byte + full_bytes + 1; i++) {
         data[i] = 0xFF;
     }
 
@@ -89,7 +88,7 @@ error_t bitmap_clear_bits(Bitmap* bitmap, size_t index, size_t length)
     first_byte_mask = ~first_byte_mask;
     data[start_byte] &= first_byte_mask;
     
-    for (int i = start_byte + 1; i < start_byte + full_bytes + 1; i++) {
+    for (size_t i = start_byte + 1; i < start_byte + full_bytes + 1; i++) {
         data[i] = 0x00;
     }
 

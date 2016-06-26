@@ -106,6 +106,10 @@ void test_itoa_i(void)
     TEST_ASSERT_EQUAL_HEX32(ERROR_SUCCESS, itoa_i(-5, str, sizeof(str)));
     TEST_ASSERT_EQUAL_STRING("-5", str);
 
+    char str1[12];
+    TEST_ASSERT_EQUAL_HEX32(ERROR_SUCCESS, itoa_i(-2147483648, str1, sizeof(str1)));
+    TEST_ASSERT_EQUAL_STRING("-2147483648", str1);
+
     TEST_ASSERT_EQUAL_HEX32(ERROR_BUFFER_TOO_SMALL, itoa_i(343434, str, sizeof(str)));
     TEST_ASSERT_EQUAL_HEX32(ERROR_BUFFER_TOO_SMALL, itoa_i(-43434, str, sizeof(str)));
     TEST_ASSERT_EQUAL_HEX32(ERROR_BUFFER_TOO_SMALL, itoa_i(-343434, str, sizeof(str)));

@@ -21,7 +21,7 @@ error_t str_cpy(char* dst, size_t max_len, char* src)
     if (str_len(src) + 1 > max_len)
         return ERROR_BUFFER_TOO_SMALL;
 
-    for (int i = str_len(dst); i < max_len; i++) {
+    for (size_t i = str_len(dst); i < max_len; i++) {
         dst[i] = '\0';
     }
 
@@ -46,11 +46,11 @@ error_t str_ncpy(char* dst, size_t max_len, char* src, size_t n_chars)
         return ERROR_BUFFER_TOO_SMALL;
     }
 
-    for (int i = str_len(dst); i < max_len; i++) {
+    for (size_t i = str_len(dst); i < max_len; i++) {
         dst[i] = '\0';
     }
 
-    for (int i = 0; i < n_chars; i++) {
+    for (size_t i = 0; i < n_chars; i++) {
         dst[i] = src[i];
     }
 
@@ -76,7 +76,7 @@ error_t str_cat(char* dst, size_t max_len, char* src)
         return ERROR_BUFFER_TOO_SMALL;
     }
 
-    for (int i = dst_len; i < max_len; i++) {
+    for (size_t i = dst_len; i < max_len; i++) {
         dst[i] = '\0';
     }
 
@@ -87,6 +87,8 @@ error_t str_cat(char* dst, size_t max_len, char* src)
         dst_ptr++;
         src_ptr++;
     }
+
+    return ERROR_SUCCESS;
 }
 
 
@@ -101,49 +103,17 @@ error_t itoa_i(int x, char* dst, size_t max_len)
         return ERROR_BUFFER_TOO_SMALL;
     }
 
-    if (x == 0) {
-        dst[0] = '0';
-        dst[1] = '\0';
-        return ERROR_SUCCESS;
+    if (x == 0x80000000) {
+        dst[0] = '-';
+        return itoa_u(0x80000000, dst + 1, max_len - 1);
     }
-
-    if (x < 0) {
-        *dst = '-';
-        max_len--;
-        dst++;
-        x = -x;
-
-        if (max_len < 2) {
-            return ERROR_BUFFER_TOO_SMALL;
-        }
+    else if (x < 0) {
+        dst[0] = '-';
+        return itoa_u((unsigned int)-x, dst + 1, max_len - 1); 
     }
-
-    int i = 0;
-    while (x != 0 && i < max_len) {
-        dst[i] = '0' + x % 10;
-        x /= 10;
-        i++;
+    else {
+        return itoa_u((unsigned int)x, dst, max_len);
     }
-
-    if (i >= max_len) {
-        return ERROR_BUFFER_TOO_SMALL;
-    }
-
-    dst[i] = '\0';
-
-    if (i > 1) {
-        i--;
-        int j = 0;
-        while (j < i) {
-            char c = dst[i];
-            dst[i] = dst[j];
-            dst[j] = c;
-            i--;
-            j++;
-        }
-    }
-
-    return ERROR_SUCCESS;
 }
 
 
@@ -164,7 +134,7 @@ error_t itoa_u(unsigned int x, char* dst, size_t max_len)
         return ERROR_SUCCESS;
     }
 
-    int i = 0;
+    size_t i = 0;
     while (x != 0 && i < max_len) {
         dst[i] = '0' + x % 10;
         x /= 10;
@@ -179,7 +149,7 @@ error_t itoa_u(unsigned int x, char* dst, size_t max_len)
 
     if (i > 1) {
         i--;
-        int j = 0;
+        size_t j = 0;
         while (j < i) {
             char c = dst[i];
             dst[i] = dst[j];

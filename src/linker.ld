@@ -21,5 +21,5 @@ SECTIONS
         *(.bss)
         *(.boot_stack)
     }
-    kernel_end = .;
+    kernel_end = . ;
 }

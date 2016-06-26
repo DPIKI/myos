@@ -123,6 +123,10 @@ void term_printf(char* format, ...)
                 }
                 curr_arg++;
             }
+            else if (format[i + 1] == 's') {
+                term_put_string(args[curr_arg]);
+                curr_arg++;
+            }
 
             i++;
         }
